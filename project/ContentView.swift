@@ -15,6 +15,7 @@ struct ContentView: View {
                 .foregroundStyle(.tint)
             Text("Hll, world!")
             Text("hi!")
+            Image(systemName:"square.and.arrow.up.badge.clock.fill")
         }
         .padding()
     }
