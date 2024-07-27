@@ -8,10 +8,14 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var text: String = ""
+    @State private var username = ""
+    @State private var password = ""
 
     var body: some View {
-        TextField("Enter your text here", text: $text)
-            .padding()
+        Form {
+            TextField("Username", text: $username)
+                .autocapitalization(.none)
+            SecureField("Password", text: $password)
+        }
     }
 }
