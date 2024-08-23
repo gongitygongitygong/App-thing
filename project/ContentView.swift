@@ -436,6 +436,136 @@ struct StoreView: View {
     }
 }
 
+// Points View After Question
+struct PointViewAfterQuestion: View {
+    @State private var points = 10
+    @State private var showAlert2a = false
+    @State private var showAlert2b = false
+    @State private var showAlert3a = false
+    @State private var showAlert3b = false
+    @State private var showAlert4a = false
+    @State private var showAlert4b = false
+    @State private var lock = false
+    @State private var AChap2Status1 = false
+    @State private var AChap2Status2 = false
+    @State private var AChap3Status1 = false
+    @State private var AChap3Status2 = false
+    @State private var AChap4Status1 = false
+    @State private var AChap4Status2 = false
+    
+    let AChap2 = 50
+    let AChap3 = 75
+    let AChap4 = 100
+    let yes = "You have enough points to unlock:"
+    let no = "You do not have enough points to unlock..."
+    
+    var body: some View {
+        NavigationStack {
+            List {
+                Text("You have \(points) points")
+                    .font(.title)
+                
+                if points >= AChap2 {
+                    Text("\(yes)")
+                        .font(.title)
+                } else {
+                    Text("\(no)")
+                        .font(.title)
+                }
+                
+                Section {
+                    VStack {
+                        Text("Book A Chapter 2")
+                            .font(.title)
+                        ZStack {
+                            Image(systemName: "book")
+                                .resizable()
+                                .scaledToFit()
+                            HStack {
+                                Spacer()
+                                VStack {
+                                    Text("\(AChap2)")
+                                        .font(.largeTitle)
+                                    Text("Points")
+                                        .font(.largeTitle)
+                                }
+                                Spacer()
+                                if AChap2Status2 == false {
+                                    Image(systemName: "lock")
+                                        .font(.largeTitle)
+                                } else {
+                                    Image(systemName: "lock.open")
+                                        .font(.largeTitle)
+                                }
+                                Spacer()
+                            }
+                        }
+                        
+                        if points >= AChap2 {
+                            Text("Buy")
+                                .foregroundStyle(.black)
+                                .bold()
+                                .font(.title)
+                                .onTapGesture {
+                                    showAlert2a = true
+                                }
+                                .alert(yes, isPresented: $showAlert2a) {
+                                    Button("Yes") {
+                                        points -= AChap2
+                                        AChap2Status1 = true
+                                        AChap2Status2 = true
+                                    }
+                                    Button("No") {}
+                                } message: {
+                                    Text("Confirm your purchase")
+                                }
+                                .alert(no, isPresented: $showAlert2b) {
+                                    Button("Awww ok") {}
+                                } message: {
+                                    Text("Earn more points to buy")
+                                }
+                            if AChap2Status1 {
+                                NavigationLink("Read Book A Chapter 2 now!") {
+                                    BookAChapter2()
+                                }
+                            }
+                        } else {
+                            Text("Buy")
+                                .foregroundStyle(.gray)
+                                .bold()
+                                .font(.title)
+                                .onTapGesture {
+                                    showAlert2b = true
+                                }
+                                .alert(yes, isPresented: $showAlert2a) {
+                                    Button("Yes") {
+                                        points -= AChap2
+                                        AChap2Status1 = true
+                                        AChap2Status2 = true
+                                    }
+                                    Button("No") {}
+                                } message: {
+                                    Text("Confirm your purchase")
+                                }
+                                .alert(no, isPresented: $showAlert2b) {
+                                    Button("Awww ok") {}
+                                } message: {
+                                    Text("Earn more points to buy")
+                                }
+                            if AChap2Status1 {
+                                NavigationLink("Read Book A Chapter 2 now!") {
+                                    BookAChapter2()
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            .navigationTitle("Unlock")
+        }
+    }
+}
+
 // Main App Entry Point
 @main
 struct DreamQuestApp: App {
@@ -480,5 +610,11 @@ struct BookAChapter4_Previews: PreviewProvider {
 struct StoreView_Previews: PreviewProvider {
     static var previews: some View {
         StoreView()
+    }
+}
+
+struct PointViewAfterQuestion_Previews: PreviewProvider {
+    static var previews: some View {
+        PointViewAfterQuestion()
     }
 }
